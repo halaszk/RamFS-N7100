@@ -967,9 +967,6 @@ AWAKE_MODE()
 	MALI_TIMEOUT "awake";
 	fi;
 	
-	# set the vibrator - force in case it's has been reseted
-	echo "$pwm_val" > /sys/vibrator/pwm_val;
-
 	ENABLE_NMI;
 
 	DONT_KILL_CORTEX;

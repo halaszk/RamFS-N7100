@@ -3,12 +3,6 @@
 cat << ENDCONFIG
 <settingsRoot>
   <settingsTab name="CPU">
-    <settingsPane description="These settings control CFS (Complete Fair Scheduler) Task Scheduler Settings" name="CFS Settings">
-      <checkbox description="Enabling or Disabling HRTICK high-resolution scheduler ticks to avoid performance regression." name="HRTICK" action="schedfeat HRTICK" label="HRTICK"/>
-      <checkbox description="Disabling GENTLE_FAIR_SLEEPERS may give you better UI responsiveness." name="GENTLE_FAIR_SLEEPERS" action="schedfeat GENTLE_FAIR_SLEEPERS" label="GENTLE_FAIR_SLEEPERS"/>
-      <checkbox description="Using ARCH_POWER enables the use of arm topology power functions instead of generic ones." name="ARCH_POWER" action="schedfeat ARCH_POWER" label="ARCH_POWER"/>
-    </settingsPane>
-	
     <settingsPane description="" 
 		name="CPU Idle and Power Settings">
       <spinner description="Sets the CPU Idle Mode. Idle+LPA is the default and recommended for S3.  Default: `cat /sys/module/cpuidle_exynos4/parameters/enable_mask`." name="CPU Idle Mode" action="generic /sys/module/cpuidle_exynos4/parameters/enable_mask">
@@ -1090,10 +1084,6 @@ done
 	<checkbox description="Enable or Disable EXFAT support on boot. Stweaks exfat is disabled by default. If you know that your USB disk formatted to exfat turn it ON here and reboot."
 				 name="EXFAT module load control" action="generic_cortex /tmp/exfat" label="Enable EXFAT module"/>
 				 
-	<checkbox description="Sys kernel interface to configure linux printk logging." name="Linux printk logging" action="generic_cortex /sys/kernel/printk_mode" label="Linux printk logging enable or disable"/>
-	
-	<seekBar description="Vibration force level. Default: 75" name="Vibration force" action="generic /sys/vibrator/pwm_val" unit="%" min="0" reversed="false" step="5" max="100"/>
-	
 	<spinner description="GPS Time Zone for faster LOCK! Use your region to fix GPS location!" name="GPS Region" action="gpsregion">
 			  <spinnerItem name="No GPS Zone changes (default)" value="No_GPS_Zone_changes"/>
 			  <spinnerItem name="Set Asia" value="Asia"/>
