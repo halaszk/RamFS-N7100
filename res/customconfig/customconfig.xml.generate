@@ -272,6 +272,83 @@ done
     </settingsPane>
   </settingsTab>
 	
+	  <settingsTab name="ABB">
+    <settingsPane description="Adaptive Body Bias is a secondary voltage applied onto the body of the transistor, where as the normal voltage is the gate voltage. Adjusting the body voltage in a differential to the gate voltage changes the characteristics of the transistor in how it switches. The body bias is the delta of the body voltage to the gate voltage, or difference between gate voltage minus body voltage. A positive body bias results in a Forward Body Bias (FBB) which lowers the transistor switching threshold and allows for higher clocks at the same voltage, or lower voltage at the same clocks. A negative body bias, or Reverse Body Bias (RBB) raises the switching threshold and can drastically improve leakage, but with the reverse effects of FBB in terms of voltage and clocks. WARNING: For advanced users only who understand the electrical physics behind it."  
+                  name="Adaptive Body Bias">
+    </settingsPane>
+
+    <settingsPane description="ARM (CPU) body bias voltages."
+                  name="CPU">
+     <seekBar  description="Slice 1 frequencies: ..`cat /sys/devices/system/abb/arm/arm_slice_1_freq`]."
+               name="Slice 1 voltage"
+               action="generic /sys/devices/system/abb/arm/arm_slice_1_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 2 frequencies: ..`cat /sys/devices/system/abb/arm/arm_slice_2_freq`]."
+               name="Slice 2 voltage"
+               action="generic /sys/devices/system/abb/arm/arm_slice_2_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 3 frequencies: ..`cat /sys/devices/system/abb/arm/arm_slice_3_freq`]."
+               name="Slice 3 voltage"
+               action="generic /sys/devices/system/abb/arm/arm_slice_3_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 4 frequencies: ]`cat /sys/devices/system/abb/arm/arm_slice_3_freq`.. ."
+               name="Slice 4 voltage"
+               action="generic /sys/devices/system/abb/arm/arm_slice_4_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+    </settingsPane>
+
+    <settingsPane description="G3D (GPU) body bias voltages."
+                  name="GPU">
+     <seekBar  description="Slice 1 frequencies: ..`cat /sys/devices/system/abb/g3d/g3d_slice_1_freq`]."
+               name="Slice 1 voltage"
+               action="generic /sys/devices/system/abb/g3d/g3d_slice_1_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 2 frequencies: ..`cat /sys/devices/system/abb/g3d/g3d_slice_2_freq`]."
+               name="Slice 2 voltage"
+               action="generic /sys/devices/system/abb/g3d/g3d_slice_2_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 3 frequencies: ]`cat /sys/devices/system/abb/g3d/g3d_slice_2_freq`.. ."
+               name="Slice 3 voltage"
+               action="generic /sys/devices/system/abb/g3d/g3d_slice_3_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+    </settingsPane>
+
+    <settingsPane description="MIF (Memory interface) body bias voltages."
+                  name="MIF">
+     <seekBar  description="Slice 1 frequencies: ..`cat /sys/devices/system/abb/mif/mif_slice_1_freq`]."
+               name="Slice 1 voltage"
+               action="generic /sys/devices/system/abb/mif/mif_slice_1_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 2 frequencies: ]`cat /sys/devices/system/abb/mif/mif_slice_1_freq`.. ."
+               name="Slice 2 voltage"
+               action="generic /sys/devices/system/abb/mif/mif_slice_2_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+    </settingsPane>
+
+    <settingsPane description="INT (Internal SoC) body bias voltages."
+                  name="INT">
+     <seekBar  description="Slice 1 frequencies: ..`cat /sys/devices/system/abb/int/int_slice_1_freq`]."
+               name="Slice 1 voltage"
+               action="generic /sys/devices/system/abb/int/int_slice_1_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 2 frequencies: ]`cat /sys/devices/system/abb/int/int_slice_1_freq`.. ."
+               name="Slice 2 voltage"
+               action="generic /sys/devices/system/abb/int/int_slice_2_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+    </settingsPane>
+	 </settingsTab>
+	 
 	<settingsTab name="Memory/Internal">
 	<settingsPane description="MIF/INT represent the SoCs memory interface and internal components. The DVFS logic controls both frequencies in pairwise steps, although they frequencies are independant, they are defined together. MIF or Memory Interface is the direct voltage and frequency used on the C2C bus to the memory chip. INT or internal voltage and frequency are the internal bus and all components connected to it other than the CPU and GPU cores. This encompasses blocks like the camera interfaces, the ISP, the I/O controllers and the MFC (Hardware decoder). The configurables below control the scaling parameters of the DVFS logic of this block. The next target frequency is decided by the maximum of (Target DMC frequency ; Target CPU frequency ; Busfreq lock frequency)."
                   name="Mif/Int control">
@@ -376,7 +453,7 @@ done
     </settingsPane>
   </settingsTab>
   
- <settingsTab name="Audio">
+  <settingsTab name="Audio">
     <settingsPane description="Speaker Tuning Settings" name="Speaker Tuning">
       <checkbox description="Enable speaker equalizer for better bass response on main speakers" 
                 name="Speaker equalizer" 
@@ -647,6 +724,27 @@ done
                 name="Master sequence" 
                 action="generic01 /sys/class/misc/mdnie/sequence_intercept"
                 label="Enable master sequence"/>
+
+    </settingsPane>
+	
+	
+    <settingsPane description="Uses mDNIe to bypass the backlight driver brightness and decrease brightness by reducing luminance on the the channel RGB values. It allows to reduce brightness beyond the stock minimum."
+		  name="Digital screen brightness">
+
+      <seekBar  description="The amount of luminance to be shaved off from the colour channel components."
+		name="Brightness reduction"
+                action="generic /sys/class/misc/mdnie/brightness_reduction"
+                unit="" min="0" reversed="false" step="1" max="128"/>
+
+      <seekBar  description="The stock backlight driver ignores brightness values below 20 (0-255) and values below that point do not have any effect on brightness. The takeover point is the point in the brightness curve where the digital brightness reduction takes effect. The brightness reduction is weighted linearly from full configured value to zero on the range of zero brigtness to the takeover point. If the takeover point is beyond 20, then both hardware and digital brightness reduction can take place. This can help with having a less abrupt brightness curve caused by the digital reduction."
+		name="Takeover point"
+                action="generic /sys/class/misc/mdnie/brightness_takeover_point"
+                unit="" min="0" reversed="false" step="1" max="64"/>
+
+      <seekBar  description="Positive delta to be applied on top system brightness. Used only for the digital reduction logic during stock ROM auto-brightness activation, can be used to brighten back up the reduction value by shifting the interpreted brightness value without sacrificing minimum brightness in manual mode."
+		name="Auto-brightness input delta"
+                action="generic /sys/class/misc/mdnie/brightness_input_delta"
+                unit="" min="0" reversed="false" step="1" max="64"/>
 
     </settingsPane>
 
