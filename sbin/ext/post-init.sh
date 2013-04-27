@@ -184,6 +184,7 @@ echo "0" > /proc/sys/kernel/kptr_restrict;
 		pkill -f "com.gokhanmoral.stweaks.app";
 		echo "Waiting For UCI to finish";
 		sleep 20;
+		fi;
 	done;
 
 	# restore normal freq.
