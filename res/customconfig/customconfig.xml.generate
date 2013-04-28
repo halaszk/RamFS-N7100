@@ -1136,6 +1136,9 @@ done
 		</spinner>
 		
 	<button description="ZRAM check for active state" name="ZRAM STATS" action="push-actions/zramstats" label="ZRAM STATS"/>
+	<button description="KSM check for active state" name="KSM STATS" action="push-actions/ksmstats" label="KSM STATS"/>
+	<checkbox description="Enable or Disable 'KSM-Control'. This merge some memory but need cpu-power ..."
+			name="KSM-Control" action="generic_cortex /tmp/cortexbrain_ksm_control" label="KSM-Control"/>
   	</settingsPane>
   </settingsTab>
   <settingsTab name="Other">
@@ -1374,8 +1377,6 @@ done
 			name="CPU-Tweaks" action="generic_cortex /tmp/cortexbrain_cpu" label="CPU-Tweaks"/>
 		<checkbox description='Enable or Disable "CPU-WakeUP Tweaks". (To update after change, turn OFF screen and turn it ON after 3sec!)'
 			name="CPU-WakeUp Tweaks" action="generic_cortex /tmp/cortexbrain_cpu_boost" label="CPU-BoostTweaks"/>
-		<checkbox description='Enable or Disable "Multitaskingfix". (To update after change REBOOT)'
-			name="Multitaskingfix" action="generic_cortex /tmp/cortexbrain_multitaskingfix" label="Multitaskingfix"/>
 		<checkbox description='Enable or Disable "Battery-Tweaks". (To update after change REBOOT)'
 			name="Battery-Tweaks" action="generic_cortex /tmp/cortexbrain_battery" label="Battery-Tweaks"/>
 		<checkbox description='Enable or Disable "System-Tweak". (To update after change REBOOT)'
