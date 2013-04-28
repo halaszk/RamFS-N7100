@@ -1166,7 +1166,7 @@ SLEEP_MODE()
 	if [ "$cortexbrain_ksm_control" == on ]; then
 			KSMCTL "stop";
 		else
-			echo 2 > /sys/kernel/mm/ksm/run;
+			echo 2 > /sys/kernel/mm/uksm/run;
 	fi;
 	
 	IO_SCHEDULER "sleep";
