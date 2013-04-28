@@ -717,6 +717,25 @@ if [ "$cortexbrain_ksm_control" == on ]; then
 	ADJUST_KSM;
 fi;
 
+WIFI_PM()
+{
+	local state="$1";
+	if [ "${state}" == "sleep" ]; then
+		if [ "$wifi_pwr" == on ]; then
+			if [ -e /sys/module/dhd/parameters/wifi_pm ]; then
+				echo "1" > /sys/module/dhd/parameters/wifi_pm;
+			fi;
+		fi;
+
+	elif [ "${state}" == "awake" ]; then
+		if [ -e /sys/module/dhd/parameters/wifi_pm ]; then
+			echo "0" > /sys/module/dhd/parameters/wifi_pm;
+		fi;
+	fi;
+
+	log -p i -t $FILE_NAME "*** WIFI_PM ***: ${state}";
+}
+
 WIFI_TIMEOUT_TWEAKS()
 {
 RETURN_VALUE=$($sqlite /data/data/com.android.providers.settings/databases/settings.db "select value from secure where name='wifi_idle_ms'");
@@ -1028,6 +1047,8 @@ AWAKE_MODE()
 	echo "$scaling_governor" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
 	fi;
 	
+	WIFI_PM "awake";
+
 	TUNE_IPV6;
 	
 	NET "awake";
@@ -1139,6 +1160,8 @@ SLEEP_MODE()
 	CROND_SAFETY;
 	
 	SWAPPINESS;
+
+	WIFI_PM "sleep";
 
 	if [ "$cortexbrain_ksm_control" == on ]; then
 			KSMCTL "stop";

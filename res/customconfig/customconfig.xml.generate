@@ -1383,6 +1383,8 @@ done
 			name="System-Tweaks" action="generic_cortex /tmp/cortexbrain_system" label="System-Tweaks"/>
 		<checkbox description='Enable or Disable "Kernel-Tweaks". (To update after change REBOOT)'
 			name="Kernel-Tweaks" action="generic_cortex /tmp/cortexbrain_kernel_tweaks" label="Kernel-Tweaks"/>
+	        <checkbox description="Here you can allow WIFI to use LOW PWR when Screen is turned OFF. When screen is back ON, WIFI turns back to high PWR). If not set, WIFI uses HIGH PWR and get fast WIFI transfers on screen OFF"
+            		name="Wifi Low PWR Switch" action="generic_cortex /tmp/wifi_pwr" label="Wifi Low PWR"/>
 		<checkbox description='Enable or Disable "WIFI-Tweaks". (To update after change REBOOT)'
 			name="WIFI-Tweaks" action="generic_cortex /tmp/cortexbrain_wifi" label="WIFI-Tweaks"/>
 		 <seekBar description=""
