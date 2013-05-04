@@ -1136,9 +1136,6 @@ done
 		</spinner>
 		
 	<button description="ZRAM check for active state" name="ZRAM STATS" action="push-actions/zramstats" label="ZRAM STATS"/>
-	<button description="KSM check for active state" name="KSM STATS" action="push-actions/ksmstats" label="KSM STATS"/>
-	<checkbox description="Enable or Disable 'KSM-Control'. This merge some memory but need cpu-power ..."
-			name="KSM-Control" action="generic_cortex /tmp/cortexbrain_ksm_control" label="KSM-Control"/>
   	</settingsPane>
   </settingsTab>
   <settingsTab name="Other">

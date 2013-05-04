@@ -1027,9 +1027,9 @@ AWAKE_MODE()
 	
 	MEGA_BOOST_CPU_TWEAKS;
 
-	if [ "$cortexbrain_ksm_control" == on ] && [ "$KSM_TOTAL" != "" ]; then
-	ADJUST_KSM;
-	fi;
+#	if [ "$cortexbrain_ksm_control" == on ] && [ "$KSM_TOTAL" != "" ]; then
+#	ADJUST_KSM;
+#	fi;
 	
 	GESTURES "awake";
 	
@@ -1163,11 +1163,11 @@ SLEEP_MODE()
 
 	WIFI_PM "sleep";
 
-	if [ "$cortexbrain_ksm_control" == on ]; then
-			KSMCTL "stop";
-		else
-			echo 2 > /sys/kernel/mm/uksm/run;
-	fi;
+#	if [ "$cortexbrain_ksm_control" == on ]; then
+#			KSMCTL "stop";
+#		else
+#			echo 2 > /sys/kernel/mm/uksm/run;
+#	fi;
 	
 	IO_SCHEDULER "sleep";
 
