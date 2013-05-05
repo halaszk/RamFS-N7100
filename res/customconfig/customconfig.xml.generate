@@ -1176,12 +1176,6 @@ done
 	
     <settingsPane description="Misc Settings" name="Misc Settings">	
 	
-	<checkbox description="Enable or Disable INIT.D scripts RUN on boot. Many new ROMS are running the init.d scripts automatically. You can also force running the scripts, but if you run them and ROM runs them too, we have a problem: all scripts are running X2 times! To avoid conflicts, Stweaks RUN-control is disabled by default. If you know that your ROM is NOT supporting init.d script running, then turn it ON here and reboot."
-				 name="INIT.D Scripts RUN control" action="generic_cortex /tmp/init_d" label="Enable INIT.D scripts RUN-control"/>
-				 
-	<checkbox description="Enable or Disable EXFAT support on boot. Stweaks exfat is disabled by default. If you know that your USB disk formatted to exfat turn it ON here and reboot."
-				 name="EXFAT module load control" action="generic_cortex /tmp/exfat" label="Enable EXFAT module"/>
-				 
 	<spinner description="GPS Time Zone for faster LOCK! Use your region to fix GPS location!" name="GPS Region" action="gpsregion">
 			  <spinnerItem name="No GPS Zone changes (default)" value="No_GPS_Zone_changes"/>
 			  <spinnerItem name="Set Asia" value="Asia"/>
@@ -1196,7 +1190,7 @@ done
 	<button description="Click to see your current GPS ZONE" name="GPS ZONE" action="push-actions/gpszonecheck" label="GPS ZONE CHECK"/>
 
 		<button description="Update time via ntp-server" name="UPDATE TIME" action="push-actions/time_update" label="UPDATE TIME"/>
-      <checkbox description="Enable or Disable Android Logger (needs reboot)" name="Android Logger" action="generic /tmp/logger" label="Android Logger"/>
+      <checkbox description="Enable or Disable Android Logger (needs reboot)" name="Android Logger" action="generic_cortex /tmp/logger" label="Android Logger"/>
 
 		<spinner description="Change USB connection mode. Either leave it as default or force it to mass storage mode (you will see your sdcards as disks) or mtp"
 				 name="USB Mass Storage Mode" action="usb-mode">

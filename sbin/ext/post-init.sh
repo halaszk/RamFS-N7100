@@ -86,10 +86,6 @@ pkill -f "/data/gesture_set.sh";
 pkill -f "/sys/devices/virtual/misc/touch_gestures/wait_for_gesture";
 nohup $BB sh /data/gesture_set.sh;
 fi;
-if [ "$exfat" == "on" ]; then
-insmod /lib/modules/exfat_core.ko;
-insmod /lib/modules/exfat_fs.ko;
-fi;
 
 ######################################
 # Loading Modules
@@ -113,10 +109,6 @@ $BB chmod -R 755 /lib;
 if [ "$logger" == "off" ];then
 rmmod /lib/modules/logger.ko
 fi
-if [ "$exfat" == "off" ]; then
-rmmod /lib/modules/exfat_core.ko;
-rmmod /lib/modules/exfat_fs.ko;
-fi;
 # for ntfs automounting
 insmod /lib/modules/fuse.ko;
 mount -o remount,rw /
@@ -273,7 +265,5 @@ $BB sh /res/uci.sh oom_config_screen_off $oom_config_screen_off;
 fi;
 ##### init scripts #####
 
-if [ $init_d == on ]; then
 $BB sh /sbin/ext/run-init-scripts.sh;
-fi;
 
