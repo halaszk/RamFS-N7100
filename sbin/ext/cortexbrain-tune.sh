@@ -591,23 +591,16 @@ WIFI_PM()
 LOGGER()
 {
 	local state="$1";
-	local dev_log_sleep="/dev/log-sleep";
-	local dev_log="/dev/log";
 
 	if [ "${state}" == "awake" ]; then
 		if [ "$android_logger" == auto ] || [ "$android_logger" == debug ]; then
-			if [ -e $dev_log_sleep ] && [ ! -e $dev_log ]; then
-				mv $dev_log_sleep $dev_log
-			fi;
+		echo "1" > /sys/kernel/logger_mode/logger_mode;
 		fi;
 	elif [ "${state}" == "sleep" ]; then
 		if [ "$android_logger" == auto ] || [ "$android_logger" == disabled ]; then
-			if [ -e $dev_log ]; then
-				mv $dev_log $dev_log_sleep;
-			fi;
+		echo "0" > /sys/kernel/logger_mode/logger_mode;
 		fi;
 	fi;
-
 	log -p i -t $FILE_NAME "*** LOGGER ***: ${state}";
 }
 
