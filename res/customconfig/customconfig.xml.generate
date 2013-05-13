@@ -68,7 +68,7 @@ done
 
 			 <spinner description="Set the freqency threshold below which we use aggressive up-scaling. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/freq_for_responsiveness`MHz." 
                name="Frequency for responsiveness" 
-               action="cpu-governor freq_for_responsiveness">
+               action="generic_cortex /tmp/freq_for_responsiveness">
              <spinnerItem name="1000MHz" value="1000000"/>
              <spinnerItem name="800MHz" value="800000"/>
              <spinnerItem name="600MHz" value="600000"/>
@@ -79,7 +79,7 @@ done
 	  
       <spinner description="Set the freqency threshold beyond which we use aggressive down-scaling. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/freq_for_fast_down`MHz." 
                name="Frequency for fast-down" 
-               action="cpu-governor freq_for_fast_down">
+               action="generic_cortex /tmp/freq_for_fast_down">
 	     <spinnerItem name="1200MHz" value="1200000"/>
              <spinnerItem name="1000MHz" value="1000000"/>
              <spinnerItem name="800MHz" value="800000"/>
@@ -91,57 +91,57 @@ done
 	  
 	  <seekBar description="The sampling period size in which the governor polls CPU load and triggers its decision making. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/sampling_rate`µS." 
                name="Sampling rate" 
-               action="cpu-governor sampling_rate"
+               action="generic_cortex /tmp/sampling_rate"
                unit="µS" min="10000" reversed="false" step="1000" max="100000"/>
       <seekBar description="If we scale up to the maximum policy frequency, extend the next sample period by a factor of so much. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/sampling_down_factor`Samples." 
                name="Sampling down factor" 
-               action="cpu-governor sampling_down_factor"
+               action="generic_cortex /tmp/sampling_down_factor"
                unit="samples" min="1" reversed="false" step="1" max="10"/>
       <seekBar description="If the load exceeds the up threshold percentage on a single core, we trigger the scaling up logic. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold`%." 
                name="Up threshold" 
-               action="cpu-governor up_threshold"
+               action="generic_cortex /tmp/up_threshold"
                unit="%" min="11" reversed="false" step="1" max="99"/>
       <seekBar description="When targeting a frequency when scaling down, aim for a target which accomodates the current load without triggering the up threshold minus the differential value. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/down_differential`%." 
                name="Down differential" 
-               action="cpu-governor down_differential"
+               action="generic_cortex /tmp/down_differential"
                unit="%" min="0" reversed="false" step="1" max="50"/>
       <seekBar description="If the frequency is below the frequency for responsiveness, use this as the up threshold. Default: Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold_at_min_freq`%." 
                name="Up threshold at min freq" 
-               action="cpu-governor up_threshold_at_min_freq"
+               action="generic_cortex /tmp/up_threshold_at_min_freq"
                unit="%" min="11" reversed="false" step="1" max="99"/>
 	  <seekBar description="If the frequency is beyond the frequency for fast-down, use this as the up threshold. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold_at_fast_down`%." 
                name="Up threshold at fast-down" 
-               action="cpu-governor up_threshold_at_fast_down"
+               action="generic_cortex /tmp/up_threshold_at_fast_down"
                unit="%" min="11" reversed="false" step="1" max="99"/>
       <seekBar description="When the up threshold is triggered, increase the CPU frequency by this percentage of the maximum frequency policy. This value gets dissected in the next two settings. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/freq_step`%."
                name="Frequency step" 
-               action="cpu-governor freq_step"
+               action="generic_cortex /tmp/freq_step"
                unit="%" min="1" reversed="false" step="1" max="100"/>
       <seekBar description="The remainder of load space above the up threshold is dissected into three slices each having different frequency increase step sizes. The first two slices are each of up threshold differential size, lop-sided towards the lower end of the load scale. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold_diff`%."
                name="Up threshold differential" 
-               action="cpu-governor up_threshold_diff"
+               action="generic_cortex /tmp/up_threshold_diff"
                unit="%" min="0" reversed="false" step="1" max="20"/>
       <seekBar description="If we are in the first up threshold slice, we decrease the frequency step by twice this amount. The second slice decreases it once. In the last remaining slice the freq step value is taken as is. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/freq_step_dec`%."
                name="Frequency step decrease" 
-               action="cpu-governor freq_step_dec"
+               action="generic_cortex /tmp/freq_step_dec"
                unit="%" min="0" reversed="false" step="1" max="33"/>
       <seekBar description="The rate in governor samples at which a hotplug in decision takes place. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/cpu_up_rate` sample(s)."
                name="CPU up rate" 
-               action="cpu-governor cpu_up_rate"
+               action="generic_cortex /tmp/cpu_up_rate"
                unit="sample(s)" min="1" reversed="false" step="1" max="40"/>
       <seekBar description="The rate in governor samples at which a hotplug out decision takes place. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/cpu_down_rate` sample(s)."
                name="CPU down rate" 
-               action="cpu-governor cpu_down_rate"
+               action="generic_cortex /tmp/cpu_down_rate"
                unit="sample(s)" min="1" reversed="false" step="1" max="40"/>
       <seekBar description="The number of cores to bring up online when a hotplug in decision is triggered. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/up_nr_cpus` core(s)."
                name="Core upbring-count" 
-               action="cpu-governor up_nr_cpus"
+               action="generic_cortex /tmp/up_nr_cpus"
                unit="core(s)" min="1" reversed="false" step="1" max="4"/>
    </settingsPane>
    
    <settingsPane description="To bring up a core, all of the given conditions must be fulfilled. The governor analyses the up/down rate amount of sample information collected to this point, and taking the roof of each value type over the whole rate period. If the conditions from the starting point of the current core count are met, it triggers a CPU up or down. The frequency thresholds are the maximum frequency reached during the whole rate period. The runqueue thresholds are the 100th factor of the thread count averages running on the system." 
                   name="Hotplug conditionals">      
-		     <spinner description="Sets the number of CPUs to be used in hotplugging (only for PegasusQ, nightmare, hydrxq, ondemandq)" name="Max CPU Lock" action="cpu-governor max_cpu_lock">
+		     <spinner description="Sets the number of CPUs to be used in hotplugging (only for PegasusQ, nightmare, hydrxq, ondemandq)" name="Max CPU Lock" action="generic_cortex /tmp/max_cpu_lock">
              <spinnerItem name="Auto" value="0"/> 
              <spinnerItem name="Triple core mode" value="3"/>
              <spinnerItem name="Dual core mode" value="2"/>
@@ -149,7 +149,7 @@ done
       </spinner>
       <spinner description="Freqency threshold to bring up a core if 1 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_1_1`MHz." 
                name="Hotplug freq from 1 core to online" 
-               action="cpu-governor hotplug_freq_1_1">
+               action="generic_cortex /tmp/hotplug_freq_1_1">
              <spinnerItem name="1200MHz" value="1200000"/>
              <spinnerItem name="1000MHz" value="1000000"/>
              <spinnerItem name="800MHz" value="800000"/>
@@ -159,7 +159,7 @@ done
       </spinner>
       <spinner description="Freqency threshold to bring down a core if 2 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0`MHz." 
                name="Hotplug freq from 2 cores to offline" 
-               action="cpu-governor hotplug_freq_2_0">
+               action="generic_cortex /tmp/hotplug_freq_2_0">
              <spinnerItem name="1200MHz" value="1200000"/>
              <spinnerItem name="1000MHz" value="1000000"/>
              <spinnerItem name="800MHz" value="800000"/>
@@ -169,7 +169,7 @@ done
       </spinner>
       <spinner description="Freqency threshold to bring up a core if 2 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1`MHz." 
                name="Hotplug freq from 2 cores to online" 
-               action="cpu-governor hotplug_freq_2_1">
+               action="generic_cortex /tmp/hotplug_freq_2_1">
              <spinnerItem name="1200MHz" value="1200000"/>
              <spinnerItem name="1000MHz" value="1000000"/>
              <spinnerItem name="800MHz" value="800000"/>
@@ -179,7 +179,7 @@ done
       </spinner>
       <spinner description="Freqency threshold to bring down a core if 3 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0`MHz." 
                name="Hotplug freq from 3 cores to offline" 
-               action="cpu-governor hotplug_freq_3_0">
+               action="generic_cortex /tmp/hotplug_freq_3_0">
              <spinnerItem name="1200MHz" value="1200000"/>
              <spinnerItem name="1000MHz" value="1000000"/>
              <spinnerItem name="800MHz" value="800000"/>
@@ -189,7 +189,7 @@ done
       </spinner>
       <spinner description="Freqency threshold to bring up a core if 3 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1`MHz." 
                name="Hotplug freq from 3 core to online" 
-               action="cpu-governor hotplug_freq_3_1">
+               action="generic_cortex /tmp/hotplug_freq_3_1">
              <spinnerItem name="1200MHz" value="1200000"/>
              <spinnerItem name="1000MHz" value="1000000"/>
              <spinnerItem name="800MHz" value="800000"/>
@@ -199,7 +199,7 @@ done
       </spinner>
       <spinner description="Freqency threshold to bring down a core if 4 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0`MHz." 
                name="Hotplug freq from 4 cores to offline" 
-               action="cpu-governor hotplug_freq_4_0">
+               action="generic_cortex /tmp/hotplug_freq_4_0">
              <spinnerItem name="1200MHz" value="1200000"/>
              <spinnerItem name="1000MHz" value="1000000"/>
              <spinnerItem name="800MHz" value="800000"/>
@@ -209,27 +209,27 @@ done
       </spinner>
       <seekBar description="Runqueue threshold to bring up a core if 1 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1` thread depth."
                name="Runqueue depth from 1 core to online" 
-               action="cpu-governor hotplug_rq_1_1"
+               action="generic_cortex /tmp/hotplug_rq_1_1"
                unit=" thread depth" min="100" reversed="false" step="5" max="600"/>
       <seekBar description="Runqueue threshold to bring down a core if 2 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_0` thread depth."
                name="Runqueue depth from 2 core to offline" 
-               action="cpu-governor hotplug_rq_2_0"
+               action="generic_cortex /tmp/hotplug_rq_2_0"
                unit="thread depth" min="100" reversed="false" step="5" max="600"/>
       <seekBar description="Runqueue threshold to bring up a core if 2 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_1` thread depth."
                name="Runqueue depth from 2 cores to online" 
-               action="cpu-governor hotplug_rq_2_1"
+               action="generic_cortex /tmp/hotplug_rq_2_1"
                unit="thread depth" min="100" reversed="false" step="5" max="600"/>
       <seekBar description="Runqueue threshold to bring down a core if 3 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_0` thread depth."
                name="Runqueue depth from 3 core to offline" 
-               action="cpu-governor hotplug_rq_3_0"
+               action="generic_cortex /tmp/hotplug_rq_3_0"
                unit="thread depth" min="100" reversed="false" step="5" max="600"/>
       <seekBar description="Runqueue threshold to bring up a core if 2 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_1` thread depth."
                name="Runqueue depth from 3 cores to online" 
-               action="cpu-governor hotplug_rq_3_1"
+               action="generic_cortex /tmp/hotplug_rq_3_1"
                unit="thread depth" min="100" reversed="false" step="5" max="600"/>
       <seekBar description="Runqueue threshold to bring down a core if 4 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_4_0` thread depth."
                name="Runqueue depth from 4 core to offline" 
-               action="cpu-governor hotplug_rq_4_0"
+               action="generic_cortex /tmp/hotplug_rq_4_0"
                unit="thread depth" min="100" reversed="false" step="5" max="600"/>
     </settingsPane>
 	
@@ -237,11 +237,11 @@ done
                   name="Flexrate settings">
       <checkbox description="If enabled, flexrate requests are handled and sampling speed will be accelerated" 
                 name="Flexrate enable" 
-                action="cpu-governor flexrate_enable" 
+                action="generic_cortex /tmp/flexrate_enable" 
                 label="Enable flexrate requests"/>
       <spinner description="Set the freqency threshold beyond which we ignore flexrate requests. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/flexrate_max_freq`MHz." 
                name="Flexrate max freq" 
-               action="cpu-governor flexrate_max_freq">
+               action="generic_cortex /tmp/flexrate_max_freq">
              <spinnerItem name="1200MHz" value="1200000"/>
              <spinnerItem name="1000MHz" value="1000000"/>
              <spinnerItem name="800MHz" value="800000"/>
@@ -252,22 +252,22 @@ done
       </spinner>
       <seekBar description="If set to anything else than zero, ignores the flexrate request rate and uses this one instead. Ignores values under 10000. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/flexrate_forcerate`µS."
                name="Flexrate force-rate" 
-               action="cpu-governor flexrate_forcerate"
+               action="generic_cortex /tmp/flexrate_forcerate"
                unit="µS" min="0" reversed="false" step="500" max="30000"/>
     </settingsPane>
 	<settingsPane description="Additionally to the frequency and runqueue depth, we consider the average frequency load on all cores and conditionally consider that on top of the other conditions. This enables more aggressive and true-to real load scaling." 
                   name="CPU core count load biasing">
       <seekBar description="Core count beyond which we bias the online count through the global load. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/cpu_online_bias_count` core(s)."
                name="CPU online load bias count" 
-               action="cpu-governor cpu_online_bias_count"
+               action="generic_cortex /tmp/cpu_online_bias_count"
                unit="core(s)" min="1" reversed="false" step="1" max="4"/>
       <seekBar description="Global average load up threshold of the last up rate sample count period, if current core count correponds or exceeds the core bias count, to enable hotplug-in of further cores, if frequency and runqueue depth conditions are also met. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/cpu_online_bias_up_threshold`%."
                name="CPU online bias up threshold" 
-               action="cpu-governor cpu_online_bias_up_threshold"
+               action="generic_cortex /tmp/cpu_online_bias_up_threshold"
                unit="%" min="1" reversed="false" step="1" max="100"/>
       <seekBar description="Global average load down threshold of the last up rate sample count period, if current core count exceeds the core bias count, to enable hotplug-out of core(s), regardless of the primary conditions. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/cpu_online_bias_down_threshold`%."
                name="CPU online bias down threshold" 
-               action="cpu-governor cpu_online_bias_down_threshold"
+               action="generic_cortex /tmp/cpu_online_bias_down_threshold"
                unit="%" min="1" reversed="false" step="1" max="100"/>
     </settingsPane>
   </settingsTab>
@@ -583,38 +583,30 @@ done
     </settingsPane>
   </settingsTab>
   
-  <settingsTab name="Power">
-  <settingsPane description="CPU Voltage Controls. Frequencies above 1400Mhz are not allowed to be modified via STweaks. Voltage Range is 650~1400mV. Lower/higher is NOT SUPPORTED. All is done to prevent BUGS and SODS. USE this interface AT YOUR OWN RISK! If you get SOD before you can load this interface and can't fix your error, reset profiles from recovery. And think harder before you SOD your CPU with too much UV!" name="CPU Voltage Controls">
-		<checkbox description="Main switch for Voltage Control! If disabled, all below settings have no effect! If you are using an external application or script to configure CPU voltage, don't tick this checkbox. Don't start to mod voltage before you enable this switch! It will not make any effect and you will have to set all to default, and tune again!" 
-			name="CPU Voltage Main Switch" action="generic_cortex /tmp/cpu_voltage_switch" label="CPU Voltage Main Switch"/>
-		<button description="Use this button to see what CPU Voltage is used right now!" name="Check Active CPU Voltage" action="push-actions/check_cpu_voltage" label="Check CPU Voltage"/>
-		<seekBar description="CPU Voltage for 1400Mhz. Default: 1275mV"
-			name="CPU Voltage 1400Mhz" action="cpu-voltage 1" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		<seekBar description="CPU Voltage for 1300Mhz. Default: 1238mV"
-			name="CPU Voltage 1300Mhz" action="cpu-voltage 2" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		<seekBar description="CPU Voltage for 1200Mhz. Default: 1175mV"
-			name="CPU Voltage 1200Mhz" action="cpu-voltage 3" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		<seekBar description="CPU Voltage for 1100Mhz. Default: 1125mV"
-			name="CPU Voltage 1100Mhz" action="cpu-voltage 4" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		<seekBar description="CPU Voltage for 1000Mhz. Default: 1075mV"
-			name="CPU Voltage 1000Mhz" action="cpu-voltage 5" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		<seekBar description="CPU Voltage for 900Mhz. Default: 1025mV"
-			name="CPU Voltage 900Mhz" action="cpu-voltage 6" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		<seekBar description="CPU Voltage for 800Mhz. Default: 975mV"
-			name="CPU Voltage 800Mhz" action="cpu-voltage 7" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		<seekBar description="CPU Voltage for 700Mhz. Default: 963mV"
-			name="CPU Voltage 700Mhz" action="cpu-voltage 8" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		<seekBar description="CPU Voltage for 600Mhz. Default: 950mV"
-			name="CPU Voltage 600Mhz" action="cpu-voltage 9" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		<seekBar description="CPU Voltage for 500Mhz. Default: 938mV"
-			name="CPU Voltage 500Mhz" action="cpu-voltage 10" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		<seekBar description="CPU Voltage for 400Mhz. Default: 925mV"
-			name="CPU Voltage 400Mhz" action="cpu-voltage 11" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		<seekBar description="CPU Voltage for 300Mhz. Default: 900mV"
-			name="CPU Voltage 300Mhz" action="cpu-voltage 12" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		<seekBar description="CPU Voltage for 200Mhz. Default: 900mV"
-			name="CPU Voltage 200Mhz" action="cpu-voltage 13" unit="µV" min="600000" reversed="false" step="12500" max="1400000"/>
-		</settingsPane>
+  <settingsTab name="Power">		
+	    <settingsPane description="Apply the settings on boot only if the desired settings prove to be stable, else the device ends up in a boot-loop. If turned off, the displayed values do not correspond the current live values but the saved profile values, some inconsistencies may occur on applying." 
+                  name="CPU control switch">
+      <checkbox description="If enabled, the below settings will be applied at boot." 
+                name="Set CPU settings on boot" 
+                action="controlswitch CPU"
+                label="Set on boot"/>
+    </settingsPane>
+
+    <settingsPane description="Decreasing voltage will lower power consumption of the CPU. Increasing it on overclocked frequencies improves stability. Too low voltage may cause instabilities and freezes." 
+                  name="CPU voltage control">
+	<button description="Use this button to see what CPU Voltage is used right now!" name="Check Active CPU Voltage" action="push-actions/check_cpu_voltage" label="Check CPU Voltage"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '      <seekBar  description="Default voltage: '$UVOLT'µV"
+	        name="'${FREQ}' MHz step" 
+                action="cpuvolt '${FREQ}'"
+                unit=" µV" min="600000" reversed="false" step="12500" max="1500000"/>"'
+  CPUFREQLIST="$CPUFREQLIST $FREQ"
+done
+`
+    </settingsPane>
 		
 	<settingsPane description="GPU Voltage Levels: The defaults are 875, 900, 950, 1025 and 1075." name="GPU Voltage Levels">
       <seekBar description="GPU Voltage for the first (lowest) step" 
@@ -1041,7 +1033,7 @@ done
 			
 	    <checkbox description="Enable inverting the screen colors by quickly pressing Home button 4 times" name="mDNIe Negative Toggle" action="generic01 /sys/module/gpio_keys/parameters/mdnie_shortcut_enabled" label="mDNIe Negative Toggle"/>
 		
-		<spinner description="Enables or disables the mechanic, disabled by default" name="LCDfreq_enable" action="cpu-governor lcdfreq" label="Dynamic Screen Frequency Scaling for CPU Governors">
+		<spinner description="Enables or disables the mechanic, disabled by default" name="LCDfreq_enable" action="generic_cortex /tmp/lcdfreq" label="Dynamic Screen Frequency Scaling for CPU Governors">
 				<spinnerItem name="On" value="1"/>
 				<spinnerItem name="Off" value="0"/>
 		</spinner>
