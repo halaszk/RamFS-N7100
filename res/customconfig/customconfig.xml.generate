@@ -1049,6 +1049,9 @@ done
 		<checkbox description="LCD Power Reduce for backlight. If you like brighter screen in cost of battery drain, then turn it off. Default: On."
 			  name="LCD POWER" action="generic01 /sys/class/lcd/panel/power_reduce" label="LCD POWER REDUCE"/>
 
+		<checkbox description="Touch Boost enabled or disabled. If you like it, more battery drain, but help lagsfree UI. Default: On."
+			  name="Touch Boost" action="generic01 /sys/devices/virtual/misc/touchboost/input_boost_enabled" label="Touch Boost"/>	  
+			  
         <spinner description="Set CPU freq boost level when you touch the screen. Lower levels will help with the battery with the cost of UI lags" name="Touch Boost Level" action="generic /sys/devices/virtual/misc/touchboost/input_boost_freq">
              <spinnerItem name="1200MHz" value="1200000"/>
              <spinnerItem name="1000MHz" value="1000000"/>
@@ -1057,7 +1060,7 @@ done
              <spinnerItem name="700MHz" value="700000"/>
              <spinnerItem name="600MHz" value="600000"/>
              <spinnerItem name="500MHz" value="500000"/>
-             <spinnerItem name="200MHz (disabled)" value="200000"/>
+             <spinnerItem name="200MHz" value="200000"/>
        </spinner>
 	   
        <checkbox description="Enable touch2wake feature which will let you unlock the phone by your finger straight over the screen . Enabling this feature may decrease your battery life." name="Touch2Wake" action="generic01 /sys/devices/virtual/misc/touchwake/enabled" label="Touch2Wake"/>
