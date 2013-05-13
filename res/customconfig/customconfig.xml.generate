@@ -1062,8 +1062,8 @@ done
 	   
        <checkbox description="Enable touch2wake feature which will let you unlock the phone by your finger straight over the screen . Enabling this feature may decrease your battery life." name="Touch2Wake" action="generic01 /sys/devices/virtual/misc/touchwake/enabled" label="Touch2Wake"/>
 
-       <seekBar description="Touch2Wake delay to turn off T2W function."
-                         name="Touch2Wake Delay" action="generic /sys/devices/virtual/misc/touchwake/delay" unit=" ms" min="45000" reversed="false" step="10000" max="120000"/>
+       <seekBar description="Touch2Wake delay to turn off T2W function. If you set delay time, touch2wake switch to slide2wake function!"
+                         name="Touch2Wake Delay" action="generic /sys/devices/virtual/misc/touchwake/delay" unit=" ms" min="0" reversed="false" step="10000" max="120000"/>
 	   
 	      <seekBar  description="Adds a delay to early-suspend to continue drawing for x amount of milliseconds."
                 name="Front buffer early suspend delay"

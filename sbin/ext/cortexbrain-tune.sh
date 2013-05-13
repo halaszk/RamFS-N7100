@@ -71,6 +71,11 @@ IO_TWEAKS()
 				echo "1" > $z/queue/rq_affinity;
 			fi;
 
+                        if [ -e $z/queue/read_ahead_kb ]; then
+                                echo "512" > $z/queue/read_ahead_kb;
+                        fi;
+
+
 		done;
 
 		MMC=`ls -d /sys/block/mmc*`;
@@ -130,7 +135,7 @@ for i in $MMC; do
 		echo "0" > /proc/sys/kernel/randomize_va_space;
 
 
-		echo "45" > /proc/sys/fs/lease-break-time;
+		echo "10" > /proc/sys/fs/lease-break-time;
 		echo "0" > /proc/sys/fs/leases-enable;
 		
 		#echo NO_NORMALIZED_SLEEPER > /sys/kernel/debug/sched_features;
@@ -428,7 +433,7 @@ MEMORY_TWEAKS()
 		#echo "50" > /proc/sys/vm/overcommit_ratio; # default: 50
 		echo "32 32" > /proc/sys/vm/lowmem_reserve_ratio;
 		echo "3" > /proc/sys/vm/page-cluster; # default: 3
-		echo "8192" > /proc/sys/vm/min_free_kbytes;
+		echo "12288" > /proc/sys/vm/min_free_kbytes;
 
 		log -p i -t $FILE_NAME "*** MEMORY_TWEAKS ***: enabled";
 		return 0;
