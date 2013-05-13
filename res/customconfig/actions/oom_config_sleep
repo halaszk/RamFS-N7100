@@ -21,7 +21,7 @@ if [ $cortexbrain_lmkiller == on ]; then
 		echo "4096" > /proc/sys/vm/mmap_min_addr;
 	;;
 	medium)
-		echo "8192,10240,12288,14336,16384,18432" > /sys/module/lowmemorykiller/parameters/minfree;
+		echo "2048,3072,6144,15360,17920,20480" > /sys/module/lowmemorykiller/parameters/minfree;
 		echo "32" > /sys/module/lowmemorykiller/parameters/cost;
 		echo "8192" > /proc/sys/vm/mmap_min_addr;
 	;;

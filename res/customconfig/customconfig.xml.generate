@@ -147,6 +147,11 @@ done
              <spinnerItem name="Dual core mode" value="2"/>
              <spinnerItem name="Single core mode" value="1"/> 
       </spinner>
+		<spinner description="Sets the number of CPUs to be used in hotplugging for screen off (only for devilq)" name="Max CPU Lock for suspend" action="generic_cortex /tmp/suspend_max_cpu">
+             <spinnerItem name="Triple core mode" value="3"/>
+             <spinnerItem name="Dual core mode" value="2"/>
+             <spinnerItem name="Single core mode" value="1"/> 
+      </spinner>
       <spinner description="Freqency threshold to bring up a core if 1 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_1_1`MHz." 
                name="Hotplug freq from 1 core to online" 
                action="generic_cortex /tmp/hotplug_freq_1_1">

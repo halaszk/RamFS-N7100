@@ -368,3 +368,4 @@ mif_slice_2_volt=
 int_slice_1_volt=
 int_slice_2_volt=
 input_boost_enabled=1
+suspend_max_cpu=1
