@@ -29,8 +29,8 @@ PROP=/system/bin/setprop;
 sqlite=/sbin/sqlite3;
 wifi_idle_wait=10000;
 # set initial vm.dirty vales
-echo "500" > /proc/sys/vm/dirty_writeback_centisecs;
-echo "250" > /proc/sys/vm/dirty_expire_centisecs;
+echo "3000" > /proc/sys/vm/dirty_writeback_centisecs;
+echo "1000" > /proc/sys/vm/dirty_expire_centisecs;
 # init functions.
 sleeprun=1;
 wifi_helper_awake=1;
@@ -138,11 +138,11 @@ for i in $MMC; do
 		echo "10" > /proc/sys/fs/lease-break-time;
 		echo "0" > /proc/sys/fs/leases-enable;
 		
-		echo NO_NORMALIZED_SLEEPER > /sys/kernel/debug/sched_features;
-		echo NO_NEW_FAIR_SLEEPERS > /sys/kernel/debug/sched_features;
-		echo NO_START_DEBIT > /sys/kernel/debug/sched_features;
-		echo NO_WAKEUP_PREEMPT > /sys/kernel/debug/sched_features;
-		echo NEXT_BUDDY > /sys/kernel/debug/sched_features;
+#		echo NO_NORMALIZED_SLEEPER > /sys/kernel/debug/sched_features;
+#		echo NO_NEW_FAIR_SLEEPERS > /sys/kernel/debug/sched_features;
+#		echo NO_START_DEBIT > /sys/kernel/debug/sched_features;
+#		echo NO_WAKEUP_PREEMPT > /sys/kernel/debug/sched_features;
+#		echo NEXT_BUDDY > /sys/kernel/debug/sched_features;
 #		echo SYNC_WAKEUPS > /sys/kernel/debug/sched_features;
 
 		log -p i -t $FILE_NAME "*** IO_TWEAKS ***: enabled";
