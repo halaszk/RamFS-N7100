@@ -29,7 +29,7 @@ PROP=/system/bin/setprop;
 sqlite=/sbin/sqlite3;
 wifi_idle_wait=10000;
 # set initial vm.dirty vales
-echo "3000" > /proc/sys/vm/dirty_writeback_centisecs;
+echo "2000" > /proc/sys/vm/dirty_writeback_centisecs;
 echo "1000" > /proc/sys/vm/dirty_expire_centisecs;
 # init functions.
 sleeprun=1;
