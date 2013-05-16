@@ -74,24 +74,25 @@ done
 			 <spinner description="Set the freqency threshold below which we use aggressive up-scaling. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/freq_for_responsiveness`MHz." 
                name="Frequency for responsiveness" 
                action="generic_cortex /tmp/freq_for_responsiveness">
-             <spinnerItem name="1000MHz" value="1000000"/>
-             <spinnerItem name="800MHz" value="800000"/>
-             <spinnerItem name="600MHz" value="600000"/>
-             <spinnerItem name="500MHz" value="500000"/>
-			 <spinnerItem name="400MHz" value="400000"/>
-             <spinnerItem name="200MHz" value="200000"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}'"/>'
+done
+`
       </spinner>
 	  
       <spinner description="Set the freqency threshold beyond which we use aggressive down-scaling. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/freq_for_fast_down`MHz." 
                name="Frequency for fast-down" 
                action="generic_cortex /tmp/freq_for_fast_down">
-	     <spinnerItem name="1200MHz" value="1200000"/>
-             <spinnerItem name="1000MHz" value="1000000"/>
-             <spinnerItem name="800MHz" value="800000"/>
-             <spinnerItem name="600MHz" value="600000"/>
-			 <spinnerItem name="500MHz" value="500000"/>
-             <spinnerItem name="400MHz" value="400000"/>
-             <spinnerItem name="200MHz" value="200000"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}'"/>'
+done
+`
       </spinner>
 	  
 	  <seekBar description="The sampling period size in which the governor polls CPU load and triggers its decision making. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/sampling_rate`µS." 
@@ -160,62 +161,68 @@ done
       <spinner description="Freqency threshold to bring up a core if 1 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_1_1`MHz." 
                name="Hotplug freq from 1 core to online" 
                action="generic_cortex /tmp/hotplug_freq_1_1">
-             <spinnerItem name="1200MHz" value="1200000"/>
-             <spinnerItem name="1000MHz" value="1000000"/>
-             <spinnerItem name="800MHz" value="800000"/>
-             <spinnerItem name="500MHz" value="500000"/>
-             <spinnerItem name="400MHz" value="400000"/>
-             <spinnerItem name="200MHz" value="200000"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}'"/>'
+done
+`
       </spinner>
       <spinner description="Freqency threshold to bring down a core if 2 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0`MHz." 
                name="Hotplug freq from 2 cores to offline" 
                action="generic_cortex /tmp/hotplug_freq_2_0">
-             <spinnerItem name="1200MHz" value="1200000"/>
-             <spinnerItem name="1000MHz" value="1000000"/>
-             <spinnerItem name="800MHz" value="800000"/>
-             <spinnerItem name="600MHz" value="600000"/>
-             <spinnerItem name="400MHz" value="400000"/>
-             <spinnerItem name="200MHz" value="200000"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}'"/>'
+done
+`
       </spinner>
       <spinner description="Freqency threshold to bring up a core if 2 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1`MHz." 
                name="Hotplug freq from 2 cores to online" 
                action="generic_cortex /tmp/hotplug_freq_2_1">
-             <spinnerItem name="1200MHz" value="1200000"/>
-             <spinnerItem name="1000MHz" value="1000000"/>
-             <spinnerItem name="800MHz" value="800000"/>
-             <spinnerItem name="500MHz" value="500000"/>
-             <spinnerItem name="400MHz" value="400000"/>
-             <spinnerItem name="200MHz" value="200000"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}'"/>'
+done
+`
       </spinner>
       <spinner description="Freqency threshold to bring down a core if 3 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0`MHz." 
                name="Hotplug freq from 3 cores to offline" 
                action="generic_cortex /tmp/hotplug_freq_3_0">
-             <spinnerItem name="1200MHz" value="1200000"/>
-             <spinnerItem name="1000MHz" value="1000000"/>
-             <spinnerItem name="800MHz" value="800000"/>
-             <spinnerItem name="600MHz" value="600000"/>
-             <spinnerItem name="400MHz" value="400000"/>
-             <spinnerItem name="200MHz" value="200000"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}'"/>'
+done
+`
       </spinner>
       <spinner description="Freqency threshold to bring up a core if 3 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1`MHz." 
                name="Hotplug freq from 3 core to online" 
                action="generic_cortex /tmp/hotplug_freq_3_1">
-             <spinnerItem name="1200MHz" value="1200000"/>
-             <spinnerItem name="1000MHz" value="1000000"/>
-             <spinnerItem name="800MHz" value="800000"/>
-             <spinnerItem name="600MHz" value="600000"/>
-             <spinnerItem name="400MHz" value="400000"/>
-             <spinnerItem name="200MHz" value="200000"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}'"/>'
+done
+`
       </spinner>
       <spinner description="Freqency threshold to bring down a core if 4 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0`MHz." 
                name="Hotplug freq from 4 cores to offline" 
                action="generic_cortex /tmp/hotplug_freq_4_0">
-             <spinnerItem name="1200MHz" value="1200000"/>
-             <spinnerItem name="1000MHz" value="1000000"/>
-             <spinnerItem name="800MHz" value="800000"/>
-             <spinnerItem name="600MHz" value="600000"/>
-             <spinnerItem name="400MHz" value="400000"/>
-             <spinnerItem name="200MHz" value="200000"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}'"/>'
+done
+`
       </spinner>
       <seekBar description="Runqueue threshold to bring up a core if 1 online. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1` thread depth."
                name="Runqueue depth from 1 core to online" 
@@ -252,13 +259,13 @@ done
       <spinner description="Set the freqency threshold beyond which we ignore flexrate requests. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/flexrate_max_freq`MHz." 
                name="Flexrate max freq" 
                action="generic_cortex /tmp/flexrate_max_freq">
-             <spinnerItem name="1200MHz" value="1200000"/>
-             <spinnerItem name="1000MHz" value="1000000"/>
-             <spinnerItem name="800MHz" value="800000"/>
-             <spinnerItem name="600MHz" value="600000"/>
-             <spinnerItem name="500MHz" value="500000"/>
-			 <spinnerItem name="400MHz" value="400000"/>
-             <spinnerItem name="200MHz" value="200000"/>
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '         <spinnerItem name="'$FREQ' MHz" value="'${FREQ}'"/>'
+done
+`
       </spinner>
       <seekBar description="If set to anything else than zero, ignores the flexrate request rate and uses this one instead. Ignores values under 10000. Default: `cat /sys/devices/system/cpu/cpufreq/pegasusq/flexrate_forcerate`µS."
                name="Flexrate force-rate" 
@@ -1403,6 +1410,20 @@ done
 		<settingsPane description='Here you can Add/Update/Remove AD Blocker! You need ROOT to do the tweak! If you want to update the blocker, you can push the "UPDATE AD NOW" button, to get the new one installed! If you install a new ROM, and you want to use AD BLOCKER, then push "UPDATE AD NOW" and REBOOT. If you need to REMOVE AD-BLOCKER use the REMOVE button and REBOOT' name="AD Blocker menu.">
 			<button description="ADD/UPDATE AD BLOCKER" name="AD-B UPDATE/ADD" action="push-actions/ad_update" label="UPDATE AD-B NOW"/>
 			<button description="REMOVE AD Blocker" name="AD-B REMOVE" action="push-actions/ad_restore" label="REMOVE AD-B NOW"/>
+		</settingsPane>
+	</settingsTab>
+	
+	<settingsTab name="BUG-REPORT">
+		<settingsPane description="Debug to SD-Card (/sdcard) (DMESG, LOGCAT, LAST-KMSG..."
+				 name="Bug-Report">
+			<button description="Bug-Report for Kernel" name="Kernel-Bug" action="push-actions/debug_to_sd 1" label="KERNEL-BUG"/>
+			<button description="Bug-Report for Apps" name="App-Bug" action="push-actions/debug_to_sd 2" label="APP-BUG"/>
+			<button description="Bug-Report for Kernel Messages" name="Last Kernel Messages" action="push-actions/debug_to_sd 3" label="LAST-KMSG"/>
+		</settingsPane>
+	</settingsTab>
+</settingsRoot>
+ENDCONFIG
+tion="REMOVE AD Blocker" name="AD-B REMOVE" action="push-actions/ad_restore" label="REMOVE AD-B NOW"/>
 		</settingsPane>
 	</settingsTab>
 	
