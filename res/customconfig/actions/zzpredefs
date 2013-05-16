@@ -224,31 +224,6 @@ case "$zzpredef" in
     ;;
 esac;
 
-echo `sampling_rate=$sampling_rate` >> $DEFAULT_PROFILE
-echo `sampling_down_factor=$sampling_down_factor` >> $DEFAULT_PROFILE
-echo `up_threshold=$up_threshold` >> $DEFAULT_PROFILE
-echo `down_threshold=$down_threshold` >> $DEFAULT_PROFILE
-echo `ignore_nice_load=$ignore_nice_load` >> $DEFAULT_PROFILE
-echo `freq_step=$freq_step` >> $DEFAULT_PROFILE
-echo `smooth_up=$smooth_up` >> $DEFAULT_PROFILE
-echo `freq_limit=$freq_limit` >> $DEFAULT_PROFILE
-echo `fast_scaling=$fast_scaling` >> $DEFAULT_PROFILE
-echo `up_threshold_hotplug1=$up_threshold_hotplug1` >> $DEFAULT_PROFILE
-echo `up_threshold_hotplug2=$up_threshold_hotplug2` >> $DEFAULT_PROFILE
-echo `up_threshold_hotplug3=$up_threshold_hotplug3` >> $DEFAULT_PROFILE
-echo `down_threshold_hotplug1=$down_threshold_hotplug1` >> $DEFAULT_PROFILE
-echo `down_threshold_hotplug2=$down_threshold_hotplug2` >> $DEFAULT_PROFILE
-echo `down_threshold_hotplug3=$down_threshold_hotplug3` >> $DEFAULT_PROFILE
-echo `sampling_rate_sleep_multiplier=$sampling_rate_sleep_multiplier` >> $DEFAULT_PROFILE
-echo `down_threshold_sleep=$down_threshold_sleep` >> $DEFAULT_PROFILE
-echo `up_threshold_sleep=$up_threshold_sleep` >> $DEFAULT_PROFILE
-echo `smooth_up_sleep=$smooth_up_sleep` >> $DEFAULT_PROFILE
-echo `hotplug_sleep=$hotplug_sleep` >> $DEFAULT_PROFILE
-echo `freq_limit_sleep=$freq_limit_sleep` >> $DEFAULT_PROFILE
-echo `freq_step_sleep=$freq_step_sleep` >> $DEFAULT_PROFILE
-echo `fast_scaling_sleep=$fast_scaling_sleep` >> $DEFAULT_PROFILE
-echo `zzmoove_predef=$zzmoove_predef` >> $DEFAULT_PROFILE
-
 echo $sampling_rate >/sys/devices/system/cpu/cpufreq/zzmoove/sampling_rate
 echo $sampling_down_factor >/sys/devices/system/cpu/cpufreq/zzmoove/sampling_down_factor
 echo $up_threshold >/sys/devices/system/cpu/cpufreq/zzmoove/up_threshold
@@ -272,7 +247,6 @@ echo $hotplug_sleep >/sys/devices/system/cpu/cpufreq/zzmoove/hotplug_sleep
 echo $freq_limit_sleep >/sys/devices/system/cpu/cpufreq/zzmoove/freq_limit_sleep
 echo $freq_step_sleep >/sys/devices/system/cpu/cpufreq/zzmoove/freq_step_sleep
 echo $fast_scaling_sleep >/sys/devices/system/cpu/cpufreq/zzmoove/fast_scaling_sleep
-
 echo $zzmoove_predef
 
 fi
