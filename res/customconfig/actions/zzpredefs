@@ -247,8 +247,6 @@ echo $hotplug_sleep >/sys/devices/system/cpu/cpufreq/zzmoove/hotplug_sleep
 echo $freq_limit_sleep >/sys/devices/system/cpu/cpufreq/zzmoove/freq_limit_sleep
 echo $freq_step_sleep >/sys/devices/system/cpu/cpufreq/zzmoove/freq_step_sleep
 echo $fast_scaling_sleep >/sys/devices/system/cpu/cpufreq/zzmoove/fast_scaling_sleep
-echo $zzmoove_predef
-
 fi
 fi
 fi

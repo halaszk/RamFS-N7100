@@ -46,10 +46,12 @@ if [ ! -f $CONFIG_XML ]; then
 mount -o remount,rw /;
 if [ "$scaling_governor" == "zzmoove" ]; then
   . /res/customconfig/customconfig_zzmoove.xml.generate > $CONFIG_XML;
-else
+fi;
+if [ "$scaling_governor" != "zzmoove" ]; then
   . /res/customconfig/customconfig.xml.generate > $CONFIG_XML;
 fi;
 fi;
+
 . /res/customconfig/customconfig-helper
 
 [ ! -f /data/.siyah/default.profile ] && cp /res/customconfig/default.profile /data/.siyah;
