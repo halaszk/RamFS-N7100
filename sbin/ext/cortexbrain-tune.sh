@@ -610,28 +610,6 @@ LOGGER()
 	log -p i -t $FILE_NAME "*** LOGGER ***: ${state}";
 }
 
-GESTURES()
-{
-	local state="$1";
-	if [ "${state}" == "awake" ]; then
-		if [ "$gesture_tweak" == on ]; then
-			echo "1" > /sys/devices/virtual/misc/touch_gestures/gestures_enabled;
-			pkill -f "/data/gesture_set.sh";
-			pkill -f "/sys/devices/virtual/misc/touch_gestures/wait_for_gesture";
-			nohup /sbin/busybox sh /data/gesture_set.sh;
-		fi;
-	elif [ "${state}" == "sleep" ]; then
-		if [ `pgrep -f "/data/gesture_set.sh" | wc -l` != 0 ] || [ `pgrep -f "/sys/devices/virtual/misc/touch_gestures/wait_for_gesture" | wc -l` != 0 ] || [ "$gesture_tweak" == off ]; then
-			pkill -f "/data/gesture_set.sh";
-			pkill -f "/sys/devices/virtual/misc/touch_gestures/wait_for_gesture";
-		fi;
-		echo "0" > /sys/devices/virtual/misc/touch_gestures/gestures_enabled;
-	fi;
-
-	log -p i -t $FILE_NAME "*** GESTURE ***: ${state}";
-}
-
-
 # ==============================================================
 # KSM-TWEAKS
 # ==============================================================
