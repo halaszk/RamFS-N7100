@@ -44,10 +44,12 @@ done;
 CONFIG_XML=/res/customconfig/customconfig.xml;
 if [ ! -f $CONFIG_XML ]; then
 mount -o remount,rw /;
+if [ "$scaling_governor" == "zzmoove" ]; then
+  . /res/customconfig/customconfig_zzmoove.xml.generate > $CONFIG_XML;
+else
   . /res/customconfig/customconfig.xml.generate > $CONFIG_XML;
 fi;
-
-
+fi;
 . /res/customconfig/customconfig-helper
 
 [ ! -f /data/.siyah/default.profile ] && cp /res/customconfig/default.profile /data/.siyah;
@@ -80,13 +82,6 @@ if [ "$logger" == "off" ];then
   echo 0 > /sys/module/xt_qtaguid/parameters/debug_mask;
 fi
 
-if [ "$gesture_tweak" == "on" ]; then
-echo "1" > /sys/devices/virtual/misc/touch_gestures/gestures_enabled;
-pkill -f "/data/gesture_set.sh";
-pkill -f "/sys/devices/virtual/misc/touch_gestures/wait_for_gesture";
-nohup $BB sh /data/gesture_set.sh;
-fi;
-
 ######################################
 # Loading Modules
 ######################################
@@ -106,9 +101,6 @@ $BB chmod -R 755 /lib;
 	$BB insmod /lib/modules/pvtcpkm.ko;
 )&
 
-if [ "$logger" == "off" ];then
-rmmod /lib/modules/logger.ko
-fi
 # for ntfs automounting
 insmod /lib/modules/fuse.ko;
 mount -o remount,rw /
@@ -170,7 +162,7 @@ echo "0" > /proc/sys/kernel/kptr_restrict;
 	chmod 666 /tmp/uci_done;
 	# custom boot booster
 	while [ "`cat /tmp/uci_done`" != "1" ]; do
-		if [ "$scaling_max_freq" != "1500000" ] || [ "$scaling_max_freq" != "1600000"]; then
+		if [ "$scaling_max_freq" != "1500000" ] || [ "$scaling_max_freq" != "1600000"] || [ "$scaling_max_freq" != "1704000"]; then
 		echo "1400000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
 		echo "1400000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
 		pkill -f "com.gokhanmoral.stweaks.app";

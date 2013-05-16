@@ -135,7 +135,7 @@ for i in $MMC; do
 		echo "0" > /proc/sys/kernel/randomize_va_space;
 
 
-		echo "10" > /proc/sys/fs/lease-break-time;
+		echo "45" > /proc/sys/fs/lease-break-time;
 		echo "0" > /proc/sys/fs/leases-enable;
 		
 #		echo NO_NORMALIZED_SLEEPER > /sys/kernel/debug/sched_features;
@@ -433,7 +433,7 @@ MEMORY_TWEAKS()
 		#echo "50" > /proc/sys/vm/overcommit_ratio; # default: 50
 		echo "32 32" > /proc/sys/vm/lowmem_reserve_ratio;
 		echo "3" > /proc/sys/vm/page-cluster; # default: 3
-		echo "12288" > /proc/sys/vm/min_free_kbytes;
+		echo "8192" > /proc/sys/vm/min_free_kbytes;
 
 		log -p i -t $FILE_NAME "*** MEMORY_TWEAKS ***: enabled";
 		return 0;
@@ -923,15 +923,6 @@ ENABLE_NMI()
 	fi;
 }
 
-GAMMA_FIX()
-{
-	echo "$min_gamma" > /sys/class/misc/brightness_curve/min_gamma;
-	echo "$max_gamma" > /sys/class/misc/brightness_curve/max_gamma;
-
-	log -p i -t $FILE_NAME "*** GAMMA_FIX: min: $min_gamma max: $max_gamma ***: done";
-}
-
-
 NET()
 {
 	local state="$1";
@@ -1018,8 +1009,6 @@ AWAKE_MODE()
 
 	IO_TWEAKS;
 
-	GAMMA_FIX;
-
 	KERNEL_SCHED "awake";
 
 	WAKEUP_DELAY;
@@ -1029,8 +1018,6 @@ AWAKE_MODE()
 #	if [ "$cortexbrain_ksm_control" == on ] && [ "$KSM_TOTAL" != "" ]; then
 #	ADJUST_KSM;
 #	fi;
-	
-	GESTURES "awake";
 	
 	WAKEUP_BOOST_DELAY;
 	
@@ -1086,13 +1073,16 @@ AWAKE_MODE()
 	LOWMMKILLER "awake";
 	fi;
 	
-		ECO_TWEAKS;
+if [ "$scaling_governor" != "zzmoove" ]; then
+	ECO_TWEAKS;
+
 		if [ "$?" == 1 ]; then
 			CPU_GOV_TWEAKS "awake";
 			log -p i -t $FILE_NAME "*** AWAKE: Normal-Mode ***";
 		else
 			log -p i -t $FILE_NAME "*** AWAKE: ECO-Mode ***";
 		fi;
+fi;
 }
 
 # ==============================================================
@@ -1129,10 +1119,11 @@ SLEEP_MODE()
 	echo "$scaling_max_suspend_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
 	fi;
 
-
+if [ "$scaling_governor" != "zzmoove" ]; then
 	# set CPU-Tweak
 	CPU_GOV_TWEAKS "sleep";
-	
+fi;
+
 	if [ "$cortexbrain_cpu_boost" == on ]; then
 	# bus freq to min 100Mhz
 	echo "80" > /sys/devices/system/cpu/busfreq/dmc_max_threshold;
@@ -1149,8 +1140,6 @@ SLEEP_MODE()
 	echo "$SLEEP_LAPTOP_MODE" > /proc/sys/vm/laptop_mode;
 
 	KERNEL_SCHED "sleep";
-
-	GESTURES "sleep";
 
 	TUNE_IPV6;
 
@@ -1171,9 +1160,10 @@ SLEEP_MODE()
 	IO_SCHEDULER "sleep";
 
 	VFS_CACHE_PRESSURE "sleep";
-		
-	TWEAK_HOTPLUG_ECO "sleep";
 
+if [ "$scaling_governor" != "zzmoove" ]; then		
+	TWEAK_HOTPLUG_ECO "sleep";
+fi;
 	DISABLE_NMI;
 
 	if [ "$cortexbrain_lmkiller" == on ]; then

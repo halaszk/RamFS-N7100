@@ -18,7 +18,7 @@ TESTCONNECTION=`wget http://www.google.com -O $TMPFILE > /dev/null 2>&1`;
 if [ $? != 0 ]; then
 	echo "Problem: no internet connection! connect and try again";
 else
-	wget http://68.233.243.9/megosztasok/V6_SuperCharger.zip -O $TMPFILE > /dev/null 2>&1;
+	wget http://198.178.123.198/megosztasok/V6_SuperCharger.zip -O $TMPFILE > /dev/null 2>&1;
 	rm -rf $CONTROL_SCRIPT_DATA;
 	mkdir $CONTROL_SCRIPT_DATA;
 	unzip $TMPFILE -d $CONTROL_SCRIPT_DATA;
