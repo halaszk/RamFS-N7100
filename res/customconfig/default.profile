@@ -368,3 +368,4 @@ mif_slice_2_volt=
 int_slice_1_volt=
 int_slice_2_volt=
 suspend_max_cpu=1
+zzmoove_predef=0

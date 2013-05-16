@@ -158,7 +158,7 @@ $BB echo 1 > /sys/class/misc/wolfson_control/switch_eq_speaker;
 echo "0" > /proc/sys/kernel/kptr_restrict;
 
 (
-	echo 0 > /tmp/uci_done;
+	echo "0" > /tmp/uci_done;
 	chmod 666 /tmp/uci_done;
 	# custom boot booster
 	while [ "`cat /tmp/uci_done`" != "1" ]; do
