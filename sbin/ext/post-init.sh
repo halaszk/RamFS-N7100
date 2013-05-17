@@ -41,17 +41,6 @@ for p in $PROFILES; do
 cp $p $p.test;
 done;
 
-CONFIG_XML=/res/customconfig/customconfig.xml;
-if [ ! -f $CONFIG_XML ]; then
-mount -o remount,rw /;
-if [ "$scaling_governor" == "zzmoove" ]; then
-  . /res/customconfig/customconfig_zzmoove.xml.generate > $CONFIG_XML;
-fi;
-if [ "$scaling_governor" != "zzmoove" ]; then
-  . /res/customconfig/customconfig.xml.generate > $CONFIG_XML;
-fi;
-fi;
-
 . /res/customconfig/customconfig-helper
 
 [ ! -f /data/.siyah/default.profile ] && cp /res/customconfig/default.profile /data/.siyah;
@@ -60,6 +49,17 @@ $BB chmod 0777 /data/.siyah/ -R;
 
 read_defaults;
 read_config;
+
+
+CONFIG_XML=/res/customconfig/customconfig.xml;
+if [ ! -f $CONFIG_XML ]; then
+mount -o remount,rw /;
+if [ "$scaling_governor" == "zzmoove" ]; then
+  . /res/customconfig/customconfig_zzmoove.xml.generate > $CONFIG_XML;
+else
+  . /res/customconfig/customconfig.xml.generate > $CONFIG_XML;
+fi;
+fi;
 
 # Cortex parent should be ROOT/INIT and not STweaks
 nohup /sbin/ext/cortexbrain-tune.sh; 
@@ -164,9 +164,12 @@ echo "0" > /proc/sys/kernel/kptr_restrict;
 	chmod 666 /tmp/uci_done;
 	# custom boot booster
 	while [ "`cat /tmp/uci_done`" != "1" ]; do
-		if [ "$scaling_max_freq" != "1500000" ] || [ "$scaling_max_freq" != "1600000"] || [ "$scaling_max_freq" != "1704000"]; then
-		echo "1400000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+		if [ "$scaling_max_freq" != "1400000" ]; then
+		echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
 		echo "1400000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
+		else
+                echo "1400000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+                echo "1400000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
 		pkill -f "com.gokhanmoral.stweaks.app";
 		echo "Waiting For UCI to finish";
 		sleep 20;

@@ -54,18 +54,6 @@ done
   </settingsTab>
 	
 	<settingsTab name="GOVERNOR TUN./(AWAKE)">
-	    <settingsPane description="Zzmoove predefined profiles" name="Zzmoove predefined profiles">
-      <spinner description="Zzmoove predefined profiles" name="Zzmoove predefined profiles" action="zzpredefs zzpredef">
-             <spinnerItem name="Default" value="0"/> 
-             <spinnerItem name="Default w/FS" value="1"/> 
-             <spinnerItem name="Battery" value="2"/> 
-             <spinnerItem name="Battery w/FS" value="3"/> 
-             <spinnerItem name="Optimized" value="4"/> 
-             <spinnerItem name="Optimized w/FS" value="5"/> 
-             <spinnerItem name="Performance\" value="6"/>
-             <spinnerItem name="Performance w/FS" value="7"/>
-      </spinner>
-    </settingsPane>
 		<settingsPane description="Tuneables for CPU hotplug, online-ing and offline-ing of cores on light use when not being used." 
                   name="Scaling speed">       
 		<spinner description="This will set the default CPU governor. Default CPU governor will only be set during early stages of booting (before init.d execution) and can be overriden by later scripts or apps." name="Default CPU Governor" action="generic /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor">
@@ -1411,13 +1399,5 @@ done
 		</settingsPane>
 	</settingsTab>
 	
-	<settingsTab name="BUG-REPORT">
-		<settingsPane description="Debug to SD-Card (/sdcard) (DMESG, LOGCAT, LAST-KMSG..."
-				 name="Bug-Report">
-			<button description="Bug-Report for Kernel" name="Kernel-Bug" action="push-actions/debug_to_sd 1" label="KERNEL-BUG"/>
-			<button description="Bug-Report for Apps" name="App-Bug" action="push-actions/debug_to_sd 2" label="APP-BUG"/>
-			<button description="Bug-Report for Kernel Messages" name="Last Kernel Messages" action="push-actions/debug_to_sd 3" label="LAST-KMSG"/>
-		</settingsPane>
-	</settingsTab>
 </settingsRoot>
 ENDCONFIG
