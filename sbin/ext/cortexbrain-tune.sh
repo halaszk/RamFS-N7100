@@ -161,30 +161,21 @@ KERNEL_TWEAKS()
 		if [ "${state}" == "awake" ]; then
 			echo "1" > /proc/sys/vm/oom_kill_allocating_task;
 			echo "0" > /proc/sys/vm/panic_on_oom;
-			echo "0" > /proc/sys/kernel/panic_on_oops;
-			echo "0" > /proc/sys/kernel/panic;
-                        echo "64" > /proc/sys/kernel/random/read_wakeup_threshold;
-                        echo "128" > /proc/sys/kernel/random/write_wakeup_threshold;
+			echo "60" > /proc/sys/kernel/panic;
 			if [ "$cortexbrain_memory" == on ]; then
-				echo "32 32" > /proc/sys/vm/lowmem_reserve_ratio;
+				echo "32 64" > /proc/sys/vm/lowmem_reserve_ratio;
 			fi;
 		elif [ "${state}" == "sleep" ]; then
-			echo "0" > /proc/sys/vm/oom_kill_allocating_task;
-			echo "0" > /proc/sys/vm/panic_on_oom;
-			echo "0" > /proc/sys/kernel/panic_on_oops;
+			echo "1" > /proc/sys/vm/oom_kill_allocating_task;
+			echo "1" > /proc/sys/vm/panic_on_oom;
 			echo "0" > /proc/sys/kernel/panic;
-                        echo "64" > /proc/sys/kernel/random/read_wakeup_threshold;
-                        echo "128" > /proc/sys/kernel/random/write_wakeup_threshold;
 			if [ "$cortexbrain_memory" == on ]; then
-				echo "64 64" > /proc/sys/vm/lowmem_reserve_ratio;
+				echo "32 32" > /proc/sys/vm/lowmem_reserve_ratio;
 			fi;
 		else
 			echo "1" > /proc/sys/vm/oom_kill_allocating_task;
 			echo "0" > /proc/sys/vm/panic_on_oom;
-			echo "0" > /proc/sys/kernel/panic_on_oops;
-			echo "0" > /proc/sys/kernel/panic;
-			echo "64" > /proc/sys/kernel/random/read_wakeup_threshold;
-			echo "128" > /proc/sys/kernel/random/write_wakeup_threshold;
+			echo "120" > /proc/sys/kernel/panic;
 		fi;
 	
 		log -p i -t $FILE_NAME "*** KERNEL_TWEAKS ***: ${state} ***: enabled";
