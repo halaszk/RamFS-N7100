@@ -8,7 +8,7 @@
 BB="/sbin/busybox";
 
 # first mod the partitions then boot
-#$BB sh /sbin/ext/system_tune_on_init.sh;
+$BB sh /sbin/ext/system_tune_on_init.sh;
 
 # oom and mem perm fix, we have auto adj code, do not allow changes in adj
 $BB chmod 777 /sys/module/lowmemorykiller/parameters/cost;
