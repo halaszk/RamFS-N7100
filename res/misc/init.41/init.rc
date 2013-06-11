@@ -19,7 +19,7 @@ on early-init
     mkdir /mnt 0775 root system
 
 
-    
+
 on init
 
 sysclktz 0
@@ -199,7 +199,7 @@ on post-fs-data
     mkdir /data/property 0700 root root
     mkdir /data/ssh 0750 root shell
     mkdir /data/ssh/empty 0700 root root
-    
+
     # SA, System SW, SAMSUNG create log directory
     mkdir /data/log 0775 system log
     chown system log /data/log
@@ -242,13 +242,13 @@ on post-fs-data
 
 #[ SEC_MM_DRM
 
-    # [ save OMA DB, when upgrading from GB to ICS    
+    # [ save OMA DB, when upgrading from GB to ICS
     mkdir /data/system/databases 0771 system system
     copy /data/data/com.sec.android.providers.drm/databases/drmdatabase.db /data/system/databases/drmdatabase.db
     chown system system /data/system/databases/drmdatabase.db
-    chmod 0774 /data/system/databases/drmdatabase.db	
+    chmod 0774 /data/system/databases/drmdatabase.db
     # ]
-    
+
     # DRM directory creation
     mkdir /system/etc/security/.drm 0775
     chown root root /system/etc/security/.drm
@@ -355,6 +355,7 @@ on boot
     chown radio system /sys/devices/system/cpu/cpufreq/pegasusq/min_cpu_lock
     chown radio system /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_lock
     chown radio system /sys/devices/system/cpu/busfreq/curr_freq
+    chown radio system /sys/devices/system/cpu/busfreq/dmc_max_threshold
     chown radio system /sys/module/mali/parameters/mali_dvfs_control
     chown system radio /sys/bus/platform/devices/s5p-tmu/lot_id
     chmod 0660 /sys/power/cpufreq_table
@@ -367,8 +368,12 @@ on boot
     chmod 0660 /sys/devices/system/cpu/cpufreq/pegasusq/min_cpu_lock
     chmod 0660 /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_lock
     chmod 0660 /sys/devices/system/cpu/busfreq/curr_freq
+    chmod 0660 /sys/devices/system/cpu/busfreq/dmc_max_threshold
     chmod 0660 /sys/module/mali/parameters/mali_dvfs_control
     chmod 0664 /sys/bus/platform/devices/s5p-tmu/lot_id
+
+# set max boot freq
+    write /sys/power/cpufreq_max_limit 1600000
 
     #chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
     #chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
@@ -421,7 +426,7 @@ on boot
     chown system radio /sys/class/audio/earjack/select_jack
     chown system radio /sys/class/audio/earjack/key_state
     chown system radio /sys/class/audio/earjack/state
-    chown media system /sys/class/audio/earjack/reselect_jack 
+    chown media system /sys/class/audio/earjack/reselect_jack
 
 # Battery node
     chown system radio /sys/class/power_supply/battery/batt_charging_source
@@ -513,6 +518,10 @@ on boot
     chown radio system /sys/devices/platform/samsung-pd.5/s3c-fimc.2/range_mode
     chmod 0660 /sys/devices/platform/samsung-pd.5/s3c-fimc.2/range_mode
 
+# Switch Device
+    chown system radio /sys/class/sec/switch/uart_sel
+    chown system radio /sys/class/sec/switch/usb_sel
+
 # Permissions for SVC LED
 	chown system system /sys/class/sec/led/led_r
 	chown system system /sys/class/sec/led/led_g
@@ -586,6 +595,8 @@ on boot
     chmod 0644 /efs/h2k.dat
     mkdir /data/misc/radio/hatp 0775 radio system
 
+    start sysinit
+
     class_start core
     class_start main
 
@@ -594,24 +605,10 @@ on boot
     chown system system /sys/class/lmk/lowmemorykiller/lmk_state
     chmod 0664 /sys/block/zram0/disksize
     chown system system /sys/block/zram0/disksize
-    write /sys/block/zram0/disksize 524288000
+    write /sys/block/zram0/disksize 209715200
     chmod 0664 /sys/block/zram0/initstate
     chown system system /sys/block/zram0/initstate
     write /sys/block/zram0/initstate 1
-    mkdir /dev/memcgrp 
-    mount cgroup none /dev/memcgrp memory
-    chmod 0700 /dev/memcgrp
-    chown system system /dev/memcgrp
-    mkdir /dev/memcgrp/hidden
-    chmod 0700 /dev/memcgrp/hidden
-    chown system system /dev/memcgrp/hidden
-    chown system system /dev/memcgrp/tasks
-    chown system system /dev/memcgrp/hidden/tasks
-    chmod 0600 /dev/memcgrp/tasks
-    chmod 0600 /dev/memcgrp/hidden/tasks
-    write /dev/memcgrp/hidden/memory.swappiness 100
-    write /dev/memcgrp/hidden/memory.soft_limit_in_bytes 0
-    write /proc/sys/vm/page-cluster 1
 
 on nonencrypted
     class_start late_start
@@ -707,10 +704,10 @@ service DR-daemon /system/bin/ddexe
     user root
     group system radio inet net_raw
 
-#service KIES-daemon /system/bin/kiesexe
-#    class main
-#    user root
-#    group system radio inet net_raw
+service KIES-daemon /system/bin/kiesexe
+    class main
+    user root
+    group system radio inet net_raw
 
 service SMD-daemon /system/bin/smdexe
     class main
@@ -736,6 +733,9 @@ service surfaceflinger /system/bin/surfaceflinger
     class main
     user system
     group system graphics
+    onrestart restart gsiff_daemon
+    onrestart restart media
+    onrestart restart netd
     onrestart restart zygote
 
 service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-system-server
@@ -746,7 +746,7 @@ service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-sys
     onrestart restart media
     onrestart restart netd
     onrestart restart gsiff_daemon
-    
+
 service drm /system/bin/drmserver
     class main
     user drm
@@ -757,12 +757,16 @@ service drm /system/bin/drmserver
 #   group drm system inet drmrpc sdcard_r
 # ]
 
+service sysinit /system/bin/logwrapper /system/xbin/busybox run-parts /system/etc/init.d
+    disabled
+    oneshot
+
 service media /system/bin/mediaserver
     class main
     user media
-    group system audio camera inet net_bt net_bt_admin net_bw_acct drmrpc sdcard_rw sdcard_r skt lgt_gid media_rw
+    group system audio camera inet net_bt net_bt_admin net_bw_acct drmrpc sdcard_rw sdcard_r skt lgt_gid media_rw graphics
 	ioprio rt 4
-	
+
 service powersnd /system/bin/samsungpowersoundplay
     class main
     user media
@@ -814,9 +818,9 @@ service installd /system/bin/installd
     class main
     socket installd stream 600 system system
 
-#service flash_recovery /system/etc/install-recovery.sh
-#    class main
-#    oneshot
+service flash_recovery /system/etc/install-recovery.sh
+    class main
+    oneshot
 
 service racoon /system/bin/racoon
     class main

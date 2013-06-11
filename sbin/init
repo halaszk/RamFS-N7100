@@ -25,14 +25,14 @@ mknod /dev/input/event2 c 13 66
 mknod /dev/input/event8 c 13 72
 mknod /dev/input/event9 c 13 73
 mknod /dev/ashmem c 10 60
-mknod /dev/block/mmcblk0p9 b 179 9
-mknod /dev/block/mmcblk0p12 b 179 12
+mknod /dev/block/mmcblk0 b 179 0
+mknod /dev/block/mmcblk0p13 b 179 13
 mknod /dev/block/loop0 b 7 0
 
 mkdir /mnt
 chmod 755 /mnt
 mkdir /.secondrom
-mount -t ext4 /dev/block/mmcblk0p12 /.secondrom
+mount -t ext4 /dev/block/mmcblk0p16 /.secondrom
 
 NEXTBOOT=`cat /.secondrom/media/.nextboot`
 rm -f /.secondrom/media/.nextboot
@@ -107,7 +107,7 @@ fi
 if [ "$SECONDROM" == "1" ]; then
   mount -t ext4 /.secondrom/media/.secondrom/system.img /system
 else
-  mount -t ext4 /dev/block/mmcblk0p9 /system
+  mount -t ext4 /dev/block/mmcblk0p13 /system
 fi
 
 
@@ -165,7 +165,7 @@ chmod -R 755 /lib
 # only if asked by user via stweaks
 if [ -e /system/run_fix_media ]; then
 # data mount
-$BB mount -t ext4 /dev/block/mmcblk0p12 /data;
+$BB mount -t ext4 /dev/block/mmcblk0p16 /data;
 
 $BB rm /system/run_fix_media;
 
@@ -188,25 +188,25 @@ if [ -e /system/run_fix_yournaling ]; then
 # CACHE partition
 $BB umount -f /cache;
 if [ -e /system/run_fix_partitions ]; then
-/sbin/e2fsck1 -yf /dev/block/mmcblk0p8;
+/sbin/e2fsck1 -yf /dev/block/mmcblk0p12;
 fi;
-/sbin/tune2fs -c -1 -i 0 -o journal_data_writeback -O ^has_journal /dev/block/mmcblk0p8;
-#$BB mount -o rw,noatime,data=writeback /dev/block/mmcblk0p8 /cache;
+/sbin/tune2fs -c -1 -i 0 -o journal_data_writeback -O ^has_journal /dev/block/mmcblk0p12;
+#$BB mount -o rw,noatime,data=writeback /dev/block/mmcblk0p12 /cache;
 # SYSTEM partition
 $BB umount -f /system;
 sleep 1;
 if [ -e /system/run_fix_partitions ]; then
-/sbin/e2fsck1 -yf /dev/block/mmcblk0p9;
+/sbin/e2fsck1 -yf /dev/block/mmcblk0p13;
 fi;
-/sbin/tune2fs -c -1 -i 0 -o journal_data_writeback -O ^has_journal /dev/block/mmcblk0p9;
+/sbin/tune2fs -c -1 -i 0 -o journal_data_writeback -O ^has_journal /dev/block/mmcblk0p13;
 #$BB mount -o remount,rw,noatime /system /system;
 # DATA partition
 $BB umount -f /data;
 sleep 1;
 if [ -e /system/run_fix_partitions ]; then
-/sbin/e2fsck1 -yf /dev/block/mmcblk0p12;
+/sbin/e2fsck1 -yf /dev/block/mmcblk0p16;
 fi;
-/sbin/tune2fs -c -1 -i 0 -o journal_data_writeback -O ^has_journal /dev/block/mmcblk0p12;
+/sbin/tune2fs -c -1 -i 0 -o journal_data_writeback -O ^has_journal /dev/block/mmcblk0p16;
 #$BB mount -o remount,rw,noatime /data /data;
 fi;
 $BB rm /system/run_fix_partitions;
